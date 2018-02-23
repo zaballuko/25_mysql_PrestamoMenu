@@ -55,4 +55,16 @@ public class PrestamoModelo extends Conector{
 		}
 		return prestamos;
 	}
+
+
+//	public Prestamo selectPorLibroUsuario(Libro libro, Usuario usuario) {
+//		
+//		PreparedStatement pst = super.conexion.prepareStatement("select * from prestamos where libro, usuario = ?,?");
+//		pst.setInt(1, libro);
+//		pst.setString(2, usuario);
+//		ResultSet rs = pst.executeQuery();
+//		
+//		
+//		return prestamo;
+//	}
 }

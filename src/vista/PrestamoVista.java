@@ -1,10 +1,13 @@
 package vista;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import javax.management.modelmbean.ModelMBeanOperationInfo;
 
+import comparator.TituloComparator;
 import modelo.Libro;
 import modelo.LibroModelo;
 import modelo.Prestamo;
@@ -81,28 +84,87 @@ public class PrestamoVista {
 		}
 		
 	}
-	public void menulistar(){
-		int opcion;
-		Scanner scan = new Scanner(System.in);
-		do{
-			System.out.println("--Prestamos--");
-			System.out.println(TOMAR_PRESTADO + " tomar prestado un libro");
-			System.out.println(ENTREGAR + " entregar un libro");
-			opcion = Integer.parseInt(scan.nextLine());
-			
-			switch (opcion) {
-			case TOMAR_PRESTADO:
-				realizarPrestamo(scan);
-				break;
-			case ENTREGAR:
-				
-				break;
-			default:
-				break;
-			}
-			
-		}while(opcion != SALIR);	
+	
+	private void entregarLibro(Scanner scan){
+		
+		//pides el dni
+		
+		System.out.println("Introduce el dni");
+		String dni = scan.nextLine();
+		String titulo = scan.nextLine();
+		
+		//Conseguir usuario
+		UsuarioModelo usuarioModelo = new UsuarioModelo();
+		Usuario usuario = usuarioModelo.selectPorDni(dni);
+		
+		//pedir el titulo
+		System.out.println("Introduce el titulo del libro");
+		LibroModelo libroModelo = new LibroModelo();
+		Libro libro = libroModelo.selectPorTitulo(titulo);
+		
+		//Seleccionar Prestamo
+		PrestamoModelo prestamoModelo = new PrestamoModelo();
+//		Prestamo prestamo = prestamoModelo.selectPorLibroUsuario(libro, usuario);
+		
+		//cambiar objeto prestamo a entregado
+		
+//		if (prestamo != null){
+//			prestamo.setEntregado(prestamo);
+//		}
+		
+		//hacer el update
+//		prestamoModelo.update(prestamo);
+		System.out.println("El libro " + libro.getTitulo()+"ha sido entregado");
+		
+		
 	}
+	
+	public void listarPrestamo(ArrayList <Prestamo> prestamos){
+		//recorrer el array y listar los prestamos
+		
+		Iterator<Prestamo> i = prestamos.iterator();
+		while (i.hasNext()) {
+		Prestamo prestamo = i.next();
+		
+		System.out.println(prestamo.getId() + ""+ prestamo.getLibro().getTitulo()+""
+		+	prestamo.getLibro().getAutor()+""
+		+prestamo.getUsuario() +""
+		+ prestamo.getUsuario().getNombre()+""
+		+prestamo.getUsuario().getApellido()+""
+		+prestamo.getFechaPrestamo()+""
+		+prestamo.getFechaLimite());
+		
+		if (prestamo.isEntregado()== true) { 
+			System.out.println("Entregado");
+			
+		}else{
+			System.out.println("No Entregado");	
+		}
+		
+	}
+	}
+	
+	
+//	public void menulistar(){
+//		int opcion;
+//		Scanner scan = new Scanner(System.in);
+//		final int LISTAR= 1 ;
+//		do{
+//			System.out.println("--LISTAR--");
+//			System.out.println(LISTAR + "Listar por Titulo");
+//			opcion = Integer.parseInt(scan.nextLine());
+//			
+//			switch (opcion) {
+//			case LISTAR:
+//				TituloComparator<T> tituloComparator = new TituloComparator();
+//				tituloComparator.compare(o1, o2);
+//				break;
+//			default:
+//				break;
+//			}
+//			
+//		}while(opcion != SALIR);	
+//	}
 	
 	
 	
